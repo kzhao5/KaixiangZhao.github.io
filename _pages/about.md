@@ -18,7 +18,7 @@ redirect_from:
 
 <span class='anchor' id='about-me'></span>
 
-I am a Ph.D. student in Computer Science at Brigham Young University (BYU), where I work with <a href="https://science.byu.edu/directory/porter-jenkins">Prof. Porter Jenkins</a>. I received my M.S. in Computer Science and Engineering from the University of Notre Dame, and my B.Eng. in Computer Science from Beijing Jiaotong University.
+I am a Ph.D. student in Computer Science at Brigham Young University (BYU). I received my M.S. in Computer Science and Engineering from the University of Notre Dame, and my B.Eng. in Computer Science from Beijing Jiaotong University.
 
 My research is in AI/ML, with a focus on Large Language Models (LLMs), Vision-Language and Multimodal Large Language Models (VLMs/MLLMs), computer vision, and trustworthy AI. I am particularly interested in post-training and reasoning distillation, test-time scaling, multimodal hallucination mitigation, and image forensics. I work day-to-day with PyTorch, Hugging Face Transformers, vLLM, DeepSpeed, and PEFT/LoRA, building reproducible distributed training and evaluation pipelines.
 
@@ -38,7 +38,8 @@ I am actively seeking research internships in LLMs, VLMs, multimodal reasoning, 
 
 - **FRAME: Forensic Routing and Adaptive Multi-path Evidence Fusion for Image Manipulation Detection**  
   **Kaixiang Zhao**, Tianrun Yu, Aoxu Zhang, Junhao Su, Porter Jenkins, Amanda Hughes  
-  *CVPR 2026 SAFE Workshop*
+  *CVPR 2026 SAFE Workshop*  
+  [PDF](https://arxiv.org/abs/2605.12826v1)
 
 - **TIGER: Traceable Inference with Graph-based Evidence Routing for Multimodal Generation**  
   **Kaixiang Zhao**, et al.  
