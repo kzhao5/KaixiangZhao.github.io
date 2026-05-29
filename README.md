@@ -65,6 +65,48 @@ Some examples:
 1. If you change the source code of the website, the livereload server will automatically refresh.
 1. When you finish the modification of your homepage, `commit` your changings and `push` to your remote REPO using `git` command.
 
+## Visitor IP Tracking
+
+This site includes an optional visitor logger that records each visitor's
+public IP, coarse geolocation, page, referrer, and user agent. Because GitHub
+Pages is fully static, the lookup runs in the visitor's browser (via the free
+[ipapi.co](https://ipapi.co) API) and the result is then sent to a logging
+endpoint that you control.
+
+Configure it in `_config.yml`:
+
+```yaml
+visitor_tracking:
+  enabled: true          # turn the feature on/off
+  endpoint: ""           # URL that receives each visit (see below)
+  show_badge: false      # show a small "Your IP: ..." badge in the corner
+```
+
+With `endpoint` empty, visits are only printed to the browser console
+(open DevTools on the live site to see them). To **store** visits, point
+`endpoint` at one of these free, no-server options:
+
+**Option A — Google Sheet via Apps Script (recommended):**
+1. Create a Google Sheet, then `Extensions → Apps Script`.
+2. Paste:
+   ```javascript
+   function doPost(e) {
+     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+     var d = JSON.parse(e.postData.contents);
+     sheet.appendRow([d.timestamp, d.ip, d.city, d.region, d.country,
+                      d.org, d.page, d.referrer, d.userAgent]);
+     return ContentService.createTextOutput("ok");
+   }
+   ```
+3. `Deploy → New deployment → Web app`, set "Who has access" to **Anyone**,
+   and copy the web-app URL into `endpoint`.
+
+**Option B — Formspree:** create a form at [formspree.io](https://formspree.io)
+and use its endpoint URL.
+
+> Note: client-side IP lookup can be blocked by ad/tracking blockers, and you
+> should disclose data collection where your local laws require it.
+
 # Acknowledges
 
 - AcadHomepage incorporates Font Awesome, which is distributed under the terms of the SIL OFL 1.1 and MIT License.

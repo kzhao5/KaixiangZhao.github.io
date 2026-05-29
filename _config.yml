@@ -1,22 +1,28 @@
 # Site Settings
-title                    : "Tianrun Yu"
-description              : "PhD student at Brigham Young University (BYU)."
-repository               : "Tianrun-Yu/Tianrun-Yu.github.io"
+title                    : "Kaixiang Zhao"
+description              : "PhD student in Computer Science at Brigham Young University (BYU), working on LLMs, VLMs, multimodal reasoning, and trustworthy AI."
+repository               : "kzhao5/kzhao5.github.io"
 google_scholar_stats_use_cdn : true
 
 # google analytics
 google_analytics_id      :  # get google_analytics_id from https://analytics.google.com/analytics/
 
+# Visitor IP tracking (see _includes/visitor-tracking.html and README)
+visitor_tracking:
+  enabled        : true   # set to false to disable visitor IP logging
+  endpoint       : ""     # Google Apps Script / Formspree / custom URL that receives the visit log (leave empty to only log in the browser console)
+  show_badge     : false  # set true to show a small "Your IP: x.x.x.x" badge in the page corner
+
 # Site Author
 author:
-  name             : "Tianrun Yu"
+  name             : "Kaixiang Zhao"
   avatar           : "images/citations.jpeg"
-  bio              : 
+  bio              :
   location         : "Provo, UT, USA"
   employer         : "Brigham Young University"
   pubmed           :
-  googlescholar    : "https://scholar.google.com/citations?user=aevgO9wAAAAJ&hl=zh-CN"
-  email            : "tianruny@byu.edu"
+  googlescholar    : "https://scholar.google.com/citations?user=j2QZb90AAAAJ&hl=zh-CN"
+  email            : "kzhao2@byu.edu"
   researchgate     :
   uri              :
   bitbucket        :
@@ -25,13 +31,13 @@ author:
   flickr           :
   facebook         :
   foursquare       :
-  github           : "Tianrun-Yu"
+  github           : "kzhao5"
   google_plus      :
   keybase          :
   instagram        :
   impactstory      :
   lastfm           :
-  linkedin         : "tianrun-yu-b73655268"
+  linkedin         : "kaixiang-zhao"
   dblp             :
   orcid            :
   pinterest        :
@@ -125,7 +131,7 @@ sass:
 
 # Outputting
 permalink: /:categories/:title/
-timezone: Asia/Shanghai # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: America/Denver # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 # Plugins
