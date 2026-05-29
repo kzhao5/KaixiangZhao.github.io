@@ -1,0 +1,108 @@
+{% if site.visitor_tracking.enabled %}
+<!-- Visitor IP tracking ------------------------------------------------------
+     This runs entirely in the visitor's browser (GitHub Pages is static, so
+     there is no server we control). It looks up the visitor's public IP and
+     coarse geolocation from a free public API, then:
+       * always logs the visit to the browser console, and
+       * optionally POSTs it to `visitor_tracking.endpoint` (a Google Apps
+         Script web app, Formspree form, or any URL you control) so the visit
+         is stored somewhere you can read it.
+     Configure everything in _config.yml under `visitor_tracking`. See README
+     for how to set up a Google Sheet logger in a couple of minutes.
+---------------------------------------------------------------------------- -->
+<script>
+(function () {
+  "use strict";
+
+  var ENDPOINT  = {{ site.visitor_tracking.endpoint | default: '' | jsonify }};
+  var SHOW_BADGE = {{ site.visitor_tracking.show_badge | default: false | jsonify }};
+
+  // Look up IP + geo. ipapi.co returns everything in one call; if it fails we
+  // fall back to ipify for at least the raw IP address.
+  function lookupVisitor() {
+    return fetch("https://ipapi.co/json/")
+      .then(function (r) { if (!r.ok) { throw new Error("ipapi " + r.status); } return r.json(); })
+      .then(function (d) {
+        return {
+          ip: d.ip,
+          city: d.city,
+          region: d.region,
+          country: d.country_name,
+          org: d.org,
+          latitude: d.latitude,
+          longitude: d.longitude
+        };
+      })
+      .catch(function () {
+        return fetch("https://api.ipify.org?format=json")
+          .then(function (r) { return r.json(); })
+          .then(function (d) { return { ip: d.ip }; });
+      });
+  }
+
+  function buildPayload(visitor) {
+    return {
+      ip: visitor.ip || null,
+      city: visitor.city || null,
+      region: visitor.region || null,
+      country: visitor.country || null,
+      org: visitor.org || null,
+      latitude: visitor.latitude || null,
+      longitude: visitor.longitude || null,
+      page: window.location.href,
+      referrer: document.referrer || null,
+      userAgent: navigator.userAgent,
+      language: navigator.language,
+      screen: window.screen ? (window.screen.width + "x" + window.screen.height) : null,
+      timestamp: new Date().toISOString()
+    };
+  }
+
+  function report(payload) {
+    // Always visible to you when you open DevTools on the live site.
+    console.log("[visitor]", payload);
+
+    if (ENDPOINT) {
+      // `no-cors` lets us POST to a Google Apps Script / cross-origin logger
+      // without CORS pre-flight headaches. The response is opaque, which is
+      // fine because we only care about delivering the log.
+      fetch(ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      }).catch(function (e) { console.warn("[visitor] log failed", e); });
+    }
+
+    if (SHOW_BADGE && payload.ip) {
+      showBadge(payload);
+    }
+  }
+
+  function showBadge(payload) {
+    var el = document.createElement("div");
+    var place = [payload.city, payload.country].filter(Boolean).join(", ");
+    el.textContent = "Your IP: " + payload.ip + (place ? " (" + place + ")" : "");
+    el.style.cssText = [
+      "position:fixed", "bottom:10px", "right:10px", "z-index:9999",
+      "background:rgba(0,0,0,0.72)", "color:#fff", "padding:6px 10px",
+      "border-radius:6px", "font-size:12px", "font-family:sans-serif",
+      "box-shadow:0 1px 4px rgba(0,0,0,0.3)"
+    ].join(";");
+    document.body.appendChild(el);
+  }
+
+  function init() {
+    lookupVisitor().then(buildPayload).then(report).catch(function (e) {
+      console.warn("[visitor] lookup failed", e);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+{% endif %}
