@@ -10,7 +10,7 @@ google_analytics_id      :  # get google_analytics_id from https://analytics.goo
 # Visitor IP tracking (see _includes/visitor-tracking.html and README)
 visitor_tracking:
   enabled        : true   # set to false to disable visitor IP logging
-  endpoint       : ""     # Google Apps Script / Formspree / custom URL that receives the visit log (leave empty to only log in the browser console)
+  endpoint       : "https://script.google.com/macros/s/AKfycbyDbujRgFoItw-6HzdMzvjHMOqLASl8yFDE_FGNJTO3EkYovNIuXcRH_AQPdn2k98ebxw/exec"  # Google Apps Script web app that logs each visit to a Google Sheet
   show_badge     : false  # set true to show a small "Your IP: x.x.x.x" badge in the page corner
 
 # Site Author
